@@ -1,16 +1,20 @@
-name: Deploy App to GitHub Pages
+name: Deploy Storybook to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
+  workflow_run:
+    workflows: ['CI Testing and Linting']
+    types:
+      - completed
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 jobs:
-  build-and-deploy:
+  deploy-storybook:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,39 +34,23 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
-
-      - name: Test
-        run: pnpm test
-
-      - name: Build App
-        run: pnpm build
+      - name: Build Storybook
+        run: pnpm build-storybook -o storybook-static
 
       - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      - name: Deploy App to GitHub Pages
+      # ✅ Preserve Main App Deployment and Replace Only Storybook
+      - name: Deploy Storybook to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git clone --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
           cd gh-pages
-
-          if [ -d "storybook" ]; then
-            mv storybook ../storybook-temp
-          fi
-
-          find . -mindepth 1 ! -regex '^./\.git\(/.*\)?' -delete
-
-          mv ../dist/* .
-
-          if [ -d "../storybook-temp" ]; then
-            mv ../storybook-temp storybook
-          fi
-
+          rm -rf storybook  # Remove old Storybook files
+          mv ../storybook-static storybook  # Move new Storybook build
           git add .
-          git commit -m "Deploy app to root, keep Storybook if exists"
+          git commit -m "Deploy updated Storybook to gh-pages"
           git push origin gh-pages
