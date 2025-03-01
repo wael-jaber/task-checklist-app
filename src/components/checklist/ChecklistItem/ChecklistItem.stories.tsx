@@ -1,6 +1,5 @@
-// src/stories/ChecklistItem.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
-import ChecklistItem from './ChecklistItem';
+import { ChecklistItem } from './ChecklistItem';
 
 const meta: Meta<typeof ChecklistItem> = {
   title: 'Checklist/ChecklistItem',
