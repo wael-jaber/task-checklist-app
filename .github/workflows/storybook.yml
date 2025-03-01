@@ -13,6 +13,8 @@ permissions:
 jobs:
   ci:
     uses: wael-jaber/task-checklist-app/.github/workflows/ci-reusable.yml@develop
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   deploy-storybook:
     runs-on: ubuntu-latest
