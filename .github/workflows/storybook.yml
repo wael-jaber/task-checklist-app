@@ -2,20 +2,26 @@ name: Deploy Storybook to GitHub Pages
 
 on:
   push:
-    branches: [develop]
-  workflow_run:
-    workflows: ['CI Testing and Linting']
-    types:
-      - completed
+    branches:
+      - develop
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
+  pull-requests: write
+  checks: write
 
 jobs:
+  ci:
+    uses: wael-jaber/task-checklist-app/.github/workflows/ci-reusable.yml@develop
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
   deploy-storybook:
     runs-on: ubuntu-latest
+    needs: ci
+    if: github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout Repository
@@ -42,15 +48,19 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      # ✅ Preserve Main App Deployment and Replace Only Storybook
       - name: Deploy Storybook to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git clone --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
           cd gh-pages
-          rm -rf storybook  # Remove old Storybook files
-          mv ../storybook-static storybook  # Move new Storybook build
+
+          if [ -d "storybook" ]; then
+            rm -rf storybook
+          fi
+
+          mv ../storybook-static storybook
+
           git add .
-          git commit -m "Deploy updated Storybook to gh-pages"
+          git commit -m "Deploy updated Storybook to /storybook/"
           git push origin gh-pages
