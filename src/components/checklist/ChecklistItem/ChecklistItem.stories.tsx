@@ -4,6 +4,7 @@ import { ChecklistItem } from './ChecklistItem';
 const meta: Meta<typeof ChecklistItem> = {
   title: 'Checklist/ChecklistItem',
   component: ChecklistItem,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },

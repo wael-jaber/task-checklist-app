@@ -4,6 +4,7 @@ import { UserLogin } from './UserLogin';
 const meta: Meta<typeof UserLogin> = {
   title: 'User/UserLogin',
   component: UserLogin,
+  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },

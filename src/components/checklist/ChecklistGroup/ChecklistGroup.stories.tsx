@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const meta: Meta<typeof ChecklistGroup> = {
   title: 'Checklist/ChecklistGroup',
   component: ChecklistGroup,
+  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },
