@@ -3,6 +3,8 @@ import { TaskListHeader } from '../TaskListHeader';
 
 const meta: Meta<typeof TaskListHeader> = {
   title: 'Tasks/TaskListHeader',
+  tags: ['autodocs'],
+
   component: TaskListHeader,
 };
 
@@ -12,6 +14,7 @@ type Story = StoryObj<typeof TaskListHeader>;
 export const Default: Story = {
   args: {
     title: 'My Tasks',
+
     onAddTask: () => {
       console.log('Add task button clicked');
     },
