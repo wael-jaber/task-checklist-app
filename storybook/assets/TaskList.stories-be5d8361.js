@@ -1,0 +1,23 @@
+import{j as e}from"./jsx-runtime-6d9837fe.js";import{T as E}from"./TaskCard-92c698d1.js";import{B as m}from"./Box-1320c606.js";import{T as p}from"./Typography-ff3380f1.js";import{D as S}from"./Divider-1f441a49.js";import{A as _}from"./Alert-5667ef00.js";import{v as s}from"./v4-4a60fe23.js";import"./index-93f6b7ae.js";import"./DefaultPropsProvider-320a04f5.js";import"./createSvgIcon-df99a646.js";import"./ButtonBase-3dac11a5.js";import"./ownerWindow-598c61de.js";import"./ChecklistItem-029cd1b5.js";import"./CheckCircle-07b0e376.js";import"./useFormControl-104fac70.js";import"./IconButton-bd7d2e9a.js";import"./CardHeader-e4a5b74a.js";import"./Paper-f1d4e8e3.js";import"./dividerClasses-9531ba68.js";import"./index-e5d314f4.js";import"./useSlot-e95d4028.js";import"./resolveComponentProps-c005490e.js";const C=({tasks:t,title:i="Tasks",emptyMessage:d="No tasks found",onTaskClick:l,onChecklistItemStatusChange:c})=>{const j=(a,w,D)=>{c&&c(a,w,D)};return e.jsxs(m,{children:[e.jsxs(m,{sx:{display:"flex",justifyContent:"space-between",alignItems:"center",mb:3},children:[e.jsx(p,{variant:"h5",component:"h2",children:i}),t.length>0&&e.jsxs(p,{variant:"body2",color:"text.secondary",children:[t.length," ",t.length===1?"task":"tasks"]})]}),e.jsx(S,{sx:{mb:3}}),t.length===0?e.jsx(_,{severity:"info",children:d}):e.jsx(m,{children:t.map(a=>e.jsx(E,{task:a,onChecklistItemStatusChange:j,onClick:l?()=>l(a.id):void 0},a.id))})]})};C.__docgenInfo={description:"",methods:[],displayName:"TaskList",props:{tasks:{required:!0,tsType:{name:"Array",elements:[{name:"Task"}],raw:"Task[]"},description:""},title:{required:!1,tsType:{name:"string"},description:"",defaultValue:{value:"'Tasks'",computed:!1}},emptyMessage:{required:!1,tsType:{name:"string"},description:"",defaultValue:{value:"'No tasks found'",computed:!1}},onTaskClick:{required:!1,tsType:{name:"signature",type:"function",raw:"(taskId: string) => void",signature:{arguments:[{type:{name:"string"},name:"taskId"}],return:{name:"void"}}},description:""},onChecklistItemStatusChange:{required:!1,tsType:{name:"signature",type:"function",raw:"(taskId: string, itemId: string, status: string) => void",signature:{arguments:[{type:{name:"string"},name:"taskId"},{type:{name:"string"},name:"itemId"},{type:{name:"string"},name:"status"}],return:{name:"void"}}},description:""}}};const X={title:"Tasks/TaskList",component:C,tags:["autodocs"],parameters:{layout:"padded"}},v=[{id:s(),userId:"user123",title:"Light Bulb 150S",isBlocked:!1,checklist:[{id:s(),text:"Check item 1",status:"not_started"},{id:s(),text:"Electrical connection, general, 3-pin",status:"done",statusText:"Done: Part installation done"},{id:s(),text:"Check item 3",status:"final_installation_done"}],createdAt:Date.now(),updatedAt:Date.now()},{id:s(),userId:"user123",title:"Electrical connection, general, 3-pin",isBlocked:!0,checklist:[{id:s(),text:"L3.1 LED surface-mounted wall light",status:"not_started"},{id:s(),text:"Electrical connection, general, 3-pin",status:"blocked",statusText:"Blocked: Part installation done"}],createdAt:Date.now(),updatedAt:Date.now()}],n={args:{tasks:v,title:"My Tasks",onTaskClick:t=>{console.log(`Task clicked: ${t}`)},onChecklistItemStatusChange:(t,i,d)=>{console.log(`Task ${t}, Item ${i} status changed to ${d}`)}}},r={args:{tasks:[],title:"My Tasks",emptyMessage:"You have no tasks. Create a new task to get started!"}},o={args:{tasks:v,title:"Critical Tasks"}};var u,k,g;n.parameters={...n.parameters,docs:{...(u=n.parameters)==null?void 0:u.docs,source:{originalSource:`{
+  args: {
+    tasks: sampleTasks,
+    title: 'My Tasks',
+    onTaskClick: taskId => {
+      console.log(\`Task clicked: \${taskId}\`);
+    },
+    onChecklistItemStatusChange: (taskId, itemId, status) => {
+      console.log(\`Task \${taskId}, Item \${itemId} status changed to \${status}\`);
+    }
+  }
+}`,...(g=(k=n.parameters)==null?void 0:k.docs)==null?void 0:g.source}}};var T,h,y;r.parameters={...r.parameters,docs:{...(T=r.parameters)==null?void 0:T.docs,source:{originalSource:`{
+  args: {
+    tasks: [],
+    title: 'My Tasks',
+    emptyMessage: 'You have no tasks. Create a new task to get started!'
+  }
+}`,...(y=(h=r.parameters)==null?void 0:h.docs)==null?void 0:y.source}}};var f,x,I;o.parameters={...o.parameters,docs:{...(f=o.parameters)==null?void 0:f.docs,source:{originalSource:`{
+  args: {
+    tasks: sampleTasks,
+    title: 'Critical Tasks'
+  }
+}`,...(I=(x=o.parameters)==null?void 0:x.docs)==null?void 0:I.source}}};const Z=["WithTasks","Empty","CustomTitle"];export{o as CustomTitle,r as Empty,n as WithTasks,Z as __namedExportsOrder,X as default};
