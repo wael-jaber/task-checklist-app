@@ -87,7 +87,7 @@ export const TaskListContainer: React.FC = () => {
     deleteTask(taskId);
   };
 
-  const handleDuplicateTask = (taskId: string) => {
+  const handleDuplicateTask = async (taskId: string) => {
     const task = tasks.find(t => t.id === taskId);
     if (task && currentUser) {
       // Create a duplicate task with same details but new IDs
@@ -103,7 +103,7 @@ export const TaskListContainer: React.FC = () => {
       };
 
       // Use store action to create the duplicate
-      const newTask = useTaskStore.getState().createTask(currentUser.id, input);
+      const newTask = await useTaskStore.getState().createTask(currentUser.id, input);
 
       // Optionally navigate to the new task
       navigate(`/tasks/${newTask.id}`);

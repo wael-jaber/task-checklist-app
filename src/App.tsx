@@ -1,7 +1,10 @@
-import React from 'react';
-import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import React, { useEffect } from 'react';
+import { CssBaseline, ThemeProvider, createTheme, Box } from '@mui/material';
 import AppRoutes from './routes';
+import { getDatabase } from './db';
+import { NetworkStatus } from '@components/common/NetworkStatus';
 
+// Create a theme
 const theme = createTheme({
   palette: {
     primary: {
@@ -14,6 +17,22 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
+  // Initialize database when app starts
+  useEffect(() => {
+    const initDb = async (): Promise<void> => {
+      try {
+        await getDatabase();
+      } catch (error) {
+        console.error(
+          'Failed to initialize database:',
+          error instanceof Error ? error.message : 'Unknown error'
+        );
+      }
+    };
+
+    initDb();
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -26,6 +45,7 @@ const App: React.FC = () => {
         }}
       >
         <AppRoutes />
+        <NetworkStatus />
       </Box>
     </ThemeProvider>
   );

@@ -30,25 +30,29 @@ export const TaskDetailContainer: React.FC = () => {
     }
   };
 
-  const handleDuplicate = () => {
+  const handleDuplicate = async () => {
     if (task && currentUser) {
-      // Create a duplicate task with same details but new IDs
-      const input = {
-        title: `${task.title} (Copy)`,
-        description: task.description,
-        checklist: task.checklist.map(item => ({
-          text: item.text,
-          status: 'not_started' as const,
-          statusText: undefined,
-        })),
-        imageMarker: task.imageMarker,
-      };
+      try {
+        // Create a duplicate task with same details but new IDs
+        const input = {
+          title: `${task.title} (Copy)`,
+          description: task.description,
+          checklist: task.checklist.map(item => ({
+            text: item.text,
+            status: 'not_started' as const,
+            statusText: undefined,
+          })),
+          imageMarker: task.imageMarker,
+        };
 
-      // Use store action to create the duplicate
-      const newTask = createTask(currentUser.id, input);
+        // Use store action to create the duplicate and wait for it to complete
+        const newTask = await createTask(currentUser.id, input);
+        console.log(newTask);
 
-      // Navigate to the new task
-      navigate(`/tasks/${newTask.id}`);
+        navigate(`/tasks/${newTask.id}`);
+      } catch (error) {
+        console.error('Failed to duplicate task:', error);
+      }
     }
   };
 
