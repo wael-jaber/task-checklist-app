@@ -3,6 +3,8 @@ import { LoadingIndicator } from './LoadingIndicator';
 
 const meta: Meta<typeof LoadingIndicator> = {
   title: 'Common/LoadingIndicator',
+  tags: ['autodocs'],
+
   component: LoadingIndicator,
 };
 
