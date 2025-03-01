@@ -8,6 +8,11 @@ on:
       - gh-pages
   pull_request:
 
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
 jobs:
   ci:
     uses: wael-jaber/task-checklist-app/.github/workflows/ci-reusable.yml@develop
