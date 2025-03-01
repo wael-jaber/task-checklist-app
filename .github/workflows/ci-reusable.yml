@@ -2,6 +2,9 @@ name: Reusable CI Workflow
 
 on:
   workflow_call:
+    secrets:
+      CODECOV_TOKEN:
+        required: true
 
 permissions:
   contents: read
@@ -35,6 +38,8 @@ jobs:
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: wael-jaber/task-checklist-app
