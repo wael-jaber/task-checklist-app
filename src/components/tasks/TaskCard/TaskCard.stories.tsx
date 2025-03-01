@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TaskCard } from './TaskCard';
+import { TaskCard } from '.';
 import { v4 as uuidv4 } from 'uuid';
 
 const meta: Meta<typeof TaskCard> = {
