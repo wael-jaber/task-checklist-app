@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "homepage": "https://wael-jaber.github.io/task-checklist-app/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

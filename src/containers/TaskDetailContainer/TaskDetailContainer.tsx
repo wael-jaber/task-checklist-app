@@ -20,13 +20,13 @@ export const TaskDetailContainer: React.FC = () => {
   const task = tasks.find(t => t.id === taskId);
 
   const handleEdit = () => {
-    navigate(`/tasks/${taskId}/edit`);
+    navigate(`/tasks/${taskId}/edit${location.search}`);
   };
 
   const handleDelete = () => {
     if (taskId) {
       deleteTask(taskId);
-      navigate('/tasks');
+      navigate(`/tasks${location.search}`);
     }
   };
 
@@ -49,7 +49,7 @@ export const TaskDetailContainer: React.FC = () => {
         const newTask = await createTask(currentUser.id, input);
         console.log(newTask);
 
-        navigate(`/tasks/${newTask.id}`);
+        navigate(`/tasks/${newTask.id}${location.search}`);
       } catch (error) {
         console.error('Failed to duplicate task:', error);
       }
@@ -69,7 +69,7 @@ export const TaskDetailContainer: React.FC = () => {
   };
 
   const handleBack = () => {
-    navigate('/tasks');
+    navigate(`/tasks${location.search}`);
   };
 
   return (
@@ -125,7 +125,7 @@ export const TaskDetailContainer: React.FC = () => {
         <TaskEmpty
           message="Task not found"
           showAddButton
-          onAddTask={() => navigate('/tasks/create')}
+          onAddTask={() => navigate(`/tasks/create${window.location.search}`)}
         />
       )}
     </Box>

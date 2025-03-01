@@ -18,7 +18,7 @@ export const TaskFormContainer: React.FC = () => {
   // Find task if in edit mode
   const task = taskId ? tasks.find(t => t.id === taskId) : undefined;
 
-  const handleSubmit = (values: CreateTaskInput) => {
+  const handleSubmit = async (values: CreateTaskInput) => {
     if (!currentUser) {
       navigate('/login');
       return;
@@ -45,19 +45,19 @@ export const TaskFormContainer: React.FC = () => {
         checklist: updatedChecklist,
         imageMarker: values.imageMarker,
       });
-      navigate(`/tasks/${taskId}`);
+      navigate(`/tasks/${taskId}${window.location.search}`);
     } else {
       // Create new task
-      const newTask = createTask(currentUser.id, values);
-      navigate(`/tasks/${newTask.id}`);
+      const newTask = await createTask(currentUser.id, values);
+      navigate(`/tasks/${newTask.id}${window.location.search}`);
     }
   };
 
   const handleCancel = () => {
     if (taskId) {
-      navigate(`/tasks/${taskId}`);
+      navigate(`/tasks/${taskId}${window.location.search}`);
     } else {
-      navigate('/tasks');
+      navigate(`/tasks${window.location.search}`);
     }
   };
 

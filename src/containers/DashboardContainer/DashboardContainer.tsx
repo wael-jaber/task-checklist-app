@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Paper, Grid } from '@mui/material';
 import { TaskEmpty } from '@components/tasks/TaskEmpty';
@@ -8,7 +8,14 @@ import { useUserStore } from '@store/userStore';
 export const DashboardContainer: React.FC = () => {
   const navigate = useNavigate();
   const { currentUser } = useUserStore();
-  const { tasks } = useTaskStore();
+  const { tasks, fetchTasks } = useTaskStore();
+
+  // Fetch tasks from database when component mounts
+  useEffect(() => {
+    if (currentUser) {
+      fetchTasks(currentUser.id);
+    }
+  }, [currentUser, fetchTasks]);
 
   // Get user's tasks
   const userTasks = currentUser ? tasks.filter(task => task.userId === currentUser.id) : [];

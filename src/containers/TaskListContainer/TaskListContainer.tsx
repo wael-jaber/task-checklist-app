@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Box } from '@mui/material';
+import { TaskCard } from '@components/tasks/TaskCard';
+import { TaskEmpty } from '@components/tasks/TaskEmpty';
 import { TaskList } from '@components/tasks/TaskList';
-import { TaskListHeader } from '@components/tasks/TaskListHeader';
 import { TaskListFilter } from '@components/tasks/TaskListFilter';
+import { TaskListHeader } from '@components/tasks/TaskListHeader';
+import { TaskMapView } from '@components/tasks/TaskMapView';
+import { ViewMode, TaskViewToggle } from '@components/tasks/TaskViewToggle';
 import { useTaskStore } from '@store/taskStore';
 import { useUserStore } from '@store/userStore';
 import { Task } from '@types';
-import { TaskCard } from '@components/tasks/TaskCard';
-import { TaskEmpty } from '@components/tasks/TaskEmpty';
+import floorPlan from '../../assets/floor-plan.png';
 
 export const TaskListContainer: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { currentUser } = useUserStore();
   const {
     tasks,
@@ -22,9 +26,20 @@ export const TaskListContainer: React.FC = () => {
     updateChecklistItem,
     deleteTask,
     toggleTaskBlocked,
+    createTask,
   } = useTaskStore();
 
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
+
+  // Initialize view mode from URL parameter or default to 'list'
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    (searchParams.get('view') as ViewMode) || 'list'
+  );
+
+  // Update search params when view mode changes
+  useEffect(() => {
+    setSearchParams({ view: viewMode });
+  }, [viewMode, setSearchParams]);
 
   // Apply filters to tasks
   useEffect(() => {
@@ -63,11 +78,16 @@ export const TaskListContainer: React.FC = () => {
   }, [tasks, filterStatus, searchQuery, currentUser]);
 
   const handleAddTask = () => {
-    navigate('/tasks/create');
+    navigate(`/tasks/create${window.location.search}`);
   };
 
   const handleTaskClick = (taskId: string) => {
-    navigate(`/tasks/${taskId}`);
+    // Preserve the current view mode when navigating to task details
+    navigate(`/tasks/${taskId}${window.location.search}`);
+  };
+
+  const handleViewModeChange = (mode: ViewMode) => {
+    setViewMode(mode);
   };
 
   const handleChecklistItemStatusChange = (
@@ -80,7 +100,7 @@ export const TaskListContainer: React.FC = () => {
   };
 
   const handleEditTask = (taskId: string) => {
-    navigate(`/tasks/${taskId}/edit`);
+    navigate(`/tasks/${taskId}/edit${window.location.search}`);
   };
 
   const handleDeleteTask = (taskId: string) => {
@@ -90,23 +110,27 @@ export const TaskListContainer: React.FC = () => {
   const handleDuplicateTask = async (taskId: string) => {
     const task = tasks.find(t => t.id === taskId);
     if (task && currentUser) {
-      // Create a duplicate task with same details but new IDs
-      const input = {
-        title: `${task.title} (Copy)`,
-        description: task.description,
-        checklist: task.checklist.map(item => ({
-          text: item.text,
-          status: 'not_started' as const,
-          statusText: undefined,
-        })),
-        imageMarker: task.imageMarker,
-      };
+      try {
+        // Create a duplicate task with same details but new IDs
+        const input = {
+          title: `${task.title} (Copy)`,
+          description: task.description,
+          checklist: task.checklist.map(item => ({
+            text: item.text,
+            status: 'not_started' as const,
+            statusText: undefined,
+          })),
+          imageMarker: task.imageMarker,
+        };
 
-      // Use store action to create the duplicate
-      const newTask = await useTaskStore.getState().createTask(currentUser.id, input);
+        // Use store action to create the duplicate and wait for it to complete
+        const newTask = await createTask(currentUser.id, input);
 
-      // Optionally navigate to the new task
-      navigate(`/tasks/${newTask.id}`);
+        // Navigate to the new task with its ID, preserving search params
+        navigate(`/tasks/${newTask.id}${window.location.search}`);
+      } catch (error) {
+        console.error('Failed to duplicate task:', error);
+      }
     }
   };
 
@@ -132,21 +156,42 @@ export const TaskListContainer: React.FC = () => {
     <Box>
       <TaskListHeader title="My Tasks" onAddTask={handleAddTask} />
 
-      <TaskListFilter
-        onSearchChange={setSearchQuery}
-        onStatusChange={setFilterStatus}
-        searchValue={searchQuery}
-        statusValue={filterStatus}
-      />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          mb: 2,
+        }}
+      >
+        <TaskViewToggle viewMode={viewMode} onChange={handleViewModeChange} />
+
+        <Box sx={{ flexGrow: 1, ml: 2 }}>
+          <TaskListFilter
+            onSearchChange={setSearchQuery}
+            onStatusChange={setFilterStatus}
+            searchValue={searchQuery}
+            statusValue={filterStatus}
+          />
+        </Box>
+      </Box>
 
       {filteredTasks.length > 0 ? (
-        <TaskList
-          tasks={filteredTasks}
-          title=""
-          onTaskClick={handleTaskClick}
-          onChecklistItemStatusChange={handleChecklistItemStatusChange}
-          renderTask={renderTask}
-        />
+        viewMode === 'list' ? (
+          <TaskList
+            tasks={filteredTasks}
+            title=""
+            onTaskClick={handleTaskClick}
+            onChecklistItemStatusChange={handleChecklistItemStatusChange}
+            renderTask={renderTask}
+          />
+        ) : (
+          <TaskMapView
+            tasks={filteredTasks}
+            onTaskClick={handleTaskClick}
+            floorPlanImage={floorPlan}
+          />
+        )
       ) : (
         <TaskEmpty
           message={
