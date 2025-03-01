@@ -60,3 +60,41 @@ export const EditExisting: Story = {
     },
   },
 };
+
+// New story for form with image marker
+export const WithImageMarker: Story = {
+  args: {
+    floorPlanImage: 'https://placehold.co/600x400/png',
+    initialValues: {
+      id: uuidv4(),
+      userId: 'user123',
+      title: 'Install Wall Light',
+      description: 'Install L3.1 LED surface-mounted wall light',
+      checklist: [
+        {
+          id: uuidv4(),
+          text: 'Electrical connection, general, 3-pin',
+          status: 'not_started' as const,
+        },
+        {
+          id: uuidv4(),
+          text: 'Wall mount installation',
+          status: 'not_started' as const,
+        },
+      ],
+      imageMarker: {
+        src: 'https://placehold.co/600x400/png',
+        x: 35,
+        y: 65,
+      },
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    },
+    onSubmit: values => {
+      console.log('Form submitted with values:', values);
+    },
+    onCancel: () => {
+      console.log('Form cancelled');
+    },
+  },
+};

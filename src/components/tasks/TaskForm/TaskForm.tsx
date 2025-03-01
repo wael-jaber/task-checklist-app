@@ -1,20 +1,42 @@
 import React, { useState } from 'react';
-import { Box, TextField, Card, CardContent, CardHeader, Divider, Grid } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  FormControlLabel,
+  Switch,
+  Typography,
+} from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateTaskInput, ChecklistItem, Task } from '@types';
 import { Button } from '@components/common/Button';
 import { ChecklistGroup } from '@components/checklist/ChecklistGroup';
+import { ImageMarker } from '../ImageMarker';
 
 export interface TaskFormProps {
   initialValues?: Partial<Task>;
   onSubmit: (values: CreateTaskInput) => void;
   onCancel?: () => void;
+  floorPlanImage?: string; // URL to the floor plan image
 }
 
-export const TaskForm: React.FC<TaskFormProps> = ({ initialValues, onSubmit, onCancel }) => {
+export const TaskForm: React.FC<TaskFormProps> = ({
+  initialValues,
+  onSubmit,
+  onCancel,
+  floorPlanImage = 'https://via.placeholder.com/800x600',
+}) => {
   const [title, setTitle] = useState(initialValues?.title || '');
   const [description, setDescription] = useState(initialValues?.description || '');
   const [checklist, setChecklist] = useState<ChecklistItem[]>(initialValues?.checklist || []);
+  const [useImageMarker, setUseImageMarker] = useState(!!initialValues?.imageMarker);
+  const [imageMarker, setImageMarker] = useState(
+    initialValues?.imageMarker || { src: floorPlanImage, x: 50, y: 50 }
+  );
   const [titleError, setTitleError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -34,6 +56,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ initialValues, onSubmit, onC
         status,
         statusText,
       })),
+      imageMarker: useImageMarker ? imageMarker : undefined,
     };
 
     onSubmit(taskData);
@@ -100,6 +123,36 @@ export const TaskForm: React.FC<TaskFormProps> = ({ initialValues, onSubmit, onC
                 editable={true}
               />
             </Grid>
+
+            {floorPlanImage && (
+              <>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={useImageMarker}
+                        onChange={e => setUseImageMarker(e.target.checked)}
+                      />
+                    }
+                    label="Add location marker on floor plan"
+                  />
+                </Grid>
+
+                {useImageMarker && (
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Task Location
+                    </Typography>
+                    <ImageMarker
+                      src={floorPlanImage}
+                      initialMarker={imageMarker}
+                      onChange={marker => setImageMarker({ ...imageMarker, ...marker })}
+                    />
+                  </Grid>
+                )}
+              </>
+            )}
+
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 2 }}>
                 {onCancel && (
