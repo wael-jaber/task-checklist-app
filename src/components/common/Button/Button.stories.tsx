@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+import { Button } from '../Button';
 import AddIcon from '@mui/icons-material/Add';
 
 // Meta information for the component

@@ -17,17 +17,24 @@ import LoginIcon from '@mui/icons-material/Login';
 export interface UserLoginProps {
   onLogin: (userName: string) => void;
   isLoading?: boolean;
+  error?: string;
 }
 
-export const UserLogin: React.FC<UserLoginProps> = ({ onLogin, isLoading = false }) => {
+export const UserLogin: React.FC<UserLoginProps> = ({
+  onLogin,
+  isLoading = false,
+  error: externalError,
+}) => {
   const [userName, setUserName] = useState('');
-  const [error, setError] = useState('');
+  const [internalError, setInternalError] = useState('');
+
+  const error = externalError || internalError;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!userName.trim()) {
-      setError('Please enter your name');
+      setInternalError('Please enter your name');
       return;
     }
 
@@ -91,7 +98,7 @@ export const UserLogin: React.FC<UserLoginProps> = ({ onLogin, isLoading = false
                 value={userName}
                 onChange={e => {
                   setUserName(e.target.value);
-                  if (e.target.value.trim()) setError('');
+                  if (e.target.value.trim()) setInternalError('');
                 }}
                 error={!!error}
                 helperText={error}

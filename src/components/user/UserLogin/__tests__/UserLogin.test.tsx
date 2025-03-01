@@ -1,4 +1,3 @@
-// src/components/__tests__/UserLogin.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { UserLogin } from '../UserLogin';

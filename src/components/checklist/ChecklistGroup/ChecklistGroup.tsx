@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ChecklistItem as ChecklistItemType } from '@types';
 import { ChecklistItem } from '../ChecklistItem';
-import { Button } from '@components/common';
+import { Button } from '@components/common/Button';
 import TextField from '@mui/material/TextField';
 
 export interface ChecklistGroupProps {

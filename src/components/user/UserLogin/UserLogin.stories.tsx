@@ -5,6 +5,7 @@ const meta: Meta<typeof UserLogin> = {
   title: 'User/UserLogin',
   component: UserLogin,
   tags: ['autodocs'],
+
   parameters: {
     layout: 'fullscreen',
   },
@@ -18,6 +19,15 @@ export const Default: Story = {
     onLogin: name => {
       console.log(`Login attempt with name: ${name}`);
     },
+  },
+};
+
+export const WithExternalError: Story = {
+  args: {
+    onLogin: name => {
+      console.log(`Login attempt with name: ${name}`);
+    },
+    error: 'User not found',
   },
 };
 
