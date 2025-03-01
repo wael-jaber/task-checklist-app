@@ -1,4 +1,3 @@
-// src/hooks/useNetworkStatus.ts
 import { useState, useEffect } from 'react';
 
 interface NetworkStatus {

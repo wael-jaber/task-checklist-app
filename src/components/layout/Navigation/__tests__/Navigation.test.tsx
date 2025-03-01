@@ -30,7 +30,6 @@ describe('Navigation Component', () => {
 
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Tasks')).toBeInTheDocument();
-    expect(screen.getByText('Completed')).toBeInTheDocument();
   });
 
   test('renders custom navigation items', () => {

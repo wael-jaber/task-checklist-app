@@ -4,7 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
-  base: './',
+  base: '/task-checklist-app/',
   resolve: {
     alias: {
       '@components': '/src/components',
