@@ -32,9 +32,7 @@ export const AppLayoutContainer: React.FC<AppLayoutContainerProps> = ({
       case 'tasks':
         navigate('/tasks');
         break;
-      case 'completed':
-        navigate('/completed');
-        break;
+
       default:
         navigate('/');
         break;

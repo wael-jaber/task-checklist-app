@@ -1,4 +1,3 @@
-// src/routes/index.tsx (updated)
 import { AppLayoutContainer } from '@containers/AppLayoutContainer';
 import { DashboardContainer } from '@containers/DashboardContainer';
 import { LoginContainer } from '@containers/LoginContainer';
@@ -6,12 +5,12 @@ import { TaskDetailContainer } from '@containers/TaskDetailContainer';
 import { TaskFormContainer } from '@containers/TaskFormContainer';
 import { TaskListContainer } from '@containers/TaskListContainer';
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 
 const AppRoutes: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/login" element={<LoginContainer />} />
 
@@ -59,11 +58,6 @@ const AppRoutes: React.FC = () => {
                 <TaskFormContainer />
               </AppLayoutContainer>
             }
-          />
-
-          <Route
-            path="/completed"
-            element={<AppLayoutContainer title="Completed Tasks">Coming soon</AppLayoutContainer>}
           />
         </Route>
 

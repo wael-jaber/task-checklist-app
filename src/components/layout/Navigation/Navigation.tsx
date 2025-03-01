@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -35,7 +34,6 @@ export interface NavigationProps {
 const defaultItems: NavigationItem[] = [
   { id: 'home', label: 'Dashboard', icon: <HomeIcon /> },
   { id: 'tasks', label: 'Tasks', icon: <AssignmentIcon /> },
-  { id: 'completed', label: 'Completed', icon: <CheckBoxIcon />, divider: true },
 ];
 
 export const Navigation: React.FC<NavigationProps> = ({
