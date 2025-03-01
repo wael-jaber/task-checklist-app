@@ -5,6 +5,7 @@ import { TaskForm } from '@components/tasks/TaskForm';
 const meta: Meta<typeof TaskForm> = {
   title: 'Tasks/TaskForm',
   component: TaskForm,
+  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },

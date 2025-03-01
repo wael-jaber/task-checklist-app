@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const meta: Meta<typeof TaskCard> = {
   title: 'Tasks/TaskCard',
   component: TaskCard,
+  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },

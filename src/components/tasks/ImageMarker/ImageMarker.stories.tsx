@@ -4,6 +4,7 @@ import { ImageMarker } from './ImageMarker';
 const meta: Meta<typeof ImageMarker> = {
   title: 'Tasks/ImageMarker',
   component: ImageMarker,
+  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },
