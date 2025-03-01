@@ -1,1 +1,0 @@
-import{j as s,g as e}from"./DefaultPropsProvider-4fe26c0b.js";function l(t){return e("MuiListItemIcon",t)}const i=s("MuiListItemIcon",["root","alignItemsFlexStart"]),o=i;function I(t){return e("MuiListItemText",t)}const n=s("MuiListItemText",["root","multiline","dense","inset","primary","secondary"]),m=n;export{l as a,o as b,I as g,m as l};
