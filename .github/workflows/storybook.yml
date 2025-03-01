@@ -2,11 +2,14 @@ name: Deploy Storybook to GitHub Pages
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
   workflow_run:
     workflows: ['CI Testing and Linting']
     types:
       - completed
+    branches:
+      - develop
 
 permissions:
   contents: write
