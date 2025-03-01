@@ -76,8 +76,12 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     setChecklist(checklist.filter(item => item.id !== id));
   };
 
-  const handleChecklistItemStatusChange = (id: string, status: ChecklistItem['status']) => {
-    setChecklist(checklist.map(item => (item.id === id ? { ...item, status } : item)));
+  const handleChecklistItemStatusChange = (
+    id: string,
+    status: ChecklistItem['status'],
+    statusText?: string
+  ) => {
+    setChecklist(checklist.map(item => (item.id === id ? { ...item, status, statusText } : item)));
   };
 
   return (

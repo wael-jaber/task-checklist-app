@@ -1,3 +1,4 @@
+// src/components/tasks/TaskList.tsx (updated)
 import React from 'react';
 import { Box, Typography, Divider, Alert } from '@mui/material';
 import { TaskCard } from '../TaskCard';
@@ -9,6 +10,7 @@ export interface TaskListProps {
   emptyMessage?: string;
   onTaskClick?: (taskId: string) => void;
   onChecklistItemStatusChange?: (taskId: string, itemId: string, status: string) => void;
+  renderTask?: (task: Task) => React.ReactNode;
 }
 
 export const TaskList: React.FC<TaskListProps> = ({
@@ -17,6 +19,7 @@ export const TaskList: React.FC<TaskListProps> = ({
   emptyMessage = 'No tasks found',
   onTaskClick,
   onChecklistItemStatusChange,
+  renderTask,
 }) => {
   // Handle checklist item status change
   const handleChecklistItemStatusChange = (taskId: string, itemId: string, status: string) => {
@@ -44,14 +47,18 @@ export const TaskList: React.FC<TaskListProps> = ({
         <Alert severity="info">{emptyMessage}</Alert>
       ) : (
         <Box>
-          {tasks.map(task => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onChecklistItemStatusChange={handleChecklistItemStatusChange}
-              onClick={onTaskClick ? () => onTaskClick(task.id) : undefined}
-            />
-          ))}
+          {renderTask
+            ? // Use custom render function if provided
+              tasks.map(task => renderTask(task))
+            : // Otherwise use default rendering
+              tasks.map(task => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  onChecklistItemStatusChange={handleChecklistItemStatusChange}
+                  onClick={onTaskClick ? () => onTaskClick(task.id) : undefined}
+                />
+              ))}
         </Box>
       )}
     </Box>

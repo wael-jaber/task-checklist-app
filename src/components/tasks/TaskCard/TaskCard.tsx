@@ -8,17 +8,24 @@ import {
   IconButton,
   Collapse,
   CardHeader,
+  Chip,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Task } from '@types';
 import { ChecklistItem } from '@components/checklist/ChecklistItem';
+import { TaskActionMenu } from '../TaskActionMenu';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-export interface TaskCardProps {
+interface TaskCardProps {
   task: Task;
   onChecklistItemStatusChange: (taskId: string, itemId: string, status: string) => void;
   onClick?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  onDuplicate?: () => void;
+  onToggleBlocked?: (blocked: boolean) => void;
 }
 
 const ExpandMore = styled(IconButton)<{ expanded: boolean }>(({ theme, expanded }) => ({
@@ -39,12 +46,20 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   task,
   onChecklistItemStatusChange,
   onClick,
+  onEdit,
+  onDelete,
+  onDuplicate,
+  onToggleBlocked,
 }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setExpanded(!expanded);
+  };
+
+  const handleMenuAction = (e: React.MouseEvent) => {
+    e.stopPropagation();
   };
 
   const handleChecklistItemChange = (itemId: string, status: string) => {
@@ -76,21 +91,39 @@ export const TaskCard: React.FC<TaskCardProps> = ({
               <TaskBlockedIndicator>
                 <ErrorIcon fontSize="small" />
                 <Typography variant="caption" ml={0.5}>
-                  Ticket progress is blocked
+                  Blocked
                 </Typography>
               </TaskBlockedIndicator>
+            )}
+            {!task.isBlocked && task.isCompleted && (
+              <Chip
+                icon={<CheckCircleIcon />}
+                label="Completed"
+                color="success"
+                size="small"
+                sx={{ ml: 1 }}
+              />
             )}
           </Box>
         }
         action={
-          <ExpandMore
-            expanded={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
+          <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={handleMenuAction}>
+            <TaskActionMenu
+              onEdit={onEdit}
+              onDelete={onDelete}
+              onDuplicate={onDuplicate}
+              onToggleBlocked={onToggleBlocked}
+              isBlocked={task.isBlocked}
+            />
+            <ExpandMore
+              expanded={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </Box>
         }
       />
       <Divider />

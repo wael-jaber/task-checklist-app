@@ -2,15 +2,11 @@ import React from 'react';
 import { Box, Typography, Checkbox } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ChecklistItem as ChecklistItemType } from '@types';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import ErrorIcon from '@mui/icons-material/Error';
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
+import { ChecklistItemStatusSelector } from '../ChecklistItemStatusSelector';
 
 export interface ChecklistItemProps {
   item: ChecklistItemType;
-  onStatusChange: (id: string, status: ChecklistItemType['status']) => void;
+  onStatusChange: (id: string, status: ChecklistItemType['status'], statusText?: string) => void;
 }
 
 const ItemContainer = styled(Box)(({ theme }) => ({
@@ -20,61 +16,23 @@ const ItemContainer = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.divider}`,
 }));
 
-const StatusIndicator = styled(Box)<{ status: ChecklistItemType['status'] }>(({
-  theme,
-  status,
-}) => {
-  const getStatusColor = () => {
-    switch (status) {
-      case 'blocked':
-        return theme.palette.error.main;
-      case 'done':
-        return theme.palette.success.main;
-      case 'final_installation_done':
-        return theme.palette.info.main;
-      case 'in_progress':
-        return theme.palette.warning.main;
-      default:
-        return theme.palette.text.disabled;
-    }
-  };
-
-  return {
-    display: 'flex',
-    alignItems: 'center',
-    color: getStatusColor(),
-    marginRight: theme.spacing(1),
-  };
-});
-
 export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onStatusChange }) => {
   const handleCheckboxChange = () => {
+    // Simple toggle between not started and done
     const newStatus = item.status === 'done' ? 'not_started' : 'done';
     onStatusChange(item.id, newStatus);
   };
 
-  const getStatusIcon = () => {
-    switch (item.status) {
-      case 'blocked':
-        return <ErrorIcon color="error" />;
-      case 'done':
-        return <CheckCircleIcon color="success" />;
-      case 'final_installation_done':
-        return <DoneAllIcon color="info" />;
-      case 'in_progress':
-        return <HourglassEmptyIcon color="warning" />;
-      default:
-        return <RadioButtonUncheckedIcon color="disabled" />;
-    }
+  const handleStatusChange = (status: ChecklistItemType['status'], statusText?: string) => {
+    onStatusChange(item.id, status, statusText);
   };
+
+  const isChecked = item.status === 'done' || item.status === 'final_installation_done';
+  const isDisabled = item.status === 'blocked';
 
   return (
     <ItemContainer>
-      <Checkbox
-        checked={item.status === 'done' || item.status === 'final_installation_done'}
-        onChange={handleCheckboxChange}
-        disabled={item.status === 'blocked'}
-      />
+      <Checkbox checked={isChecked} onChange={handleCheckboxChange} disabled={isDisabled} />
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="body1">{item.text}</Typography>
         {item.statusText && (
@@ -83,7 +41,11 @@ export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onStatusChan
           </Typography>
         )}
       </Box>
-      <StatusIndicator status={item.status}>{getStatusIcon()}</StatusIndicator>
+      <ChecklistItemStatusSelector
+        status={item.status}
+        statusText={item.statusText}
+        onStatusChange={handleStatusChange}
+      />
     </ItemContainer>
   );
 };

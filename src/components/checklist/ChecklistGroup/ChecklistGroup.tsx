@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 export interface ChecklistGroupProps {
   title?: string;
   items: ChecklistItemType[];
-  onItemChange: (id: string, status: ChecklistItemType['status']) => void;
+  onItemChange: (id: string, status: ChecklistItemType['status'], statusText?: string) => void;
   onItemAdd?: (text: string) => void;
   onItemRemove?: (id: string) => void;
   editable?: boolean;
