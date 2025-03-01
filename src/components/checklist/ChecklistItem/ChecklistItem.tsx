@@ -1,14 +1,14 @@
 import React from 'react';
 import { Box, Typography, Checkbox } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { ChecklistItem as ChecklistItemType } from '../../types';
+import { ChecklistItem as ChecklistItemType } from '@types';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import ErrorIcon from '@mui/icons-material/Error';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
-interface ChecklistItemProps {
+export interface ChecklistItemProps {
   item: ChecklistItemType;
   onStatusChange: (id: string, status: ChecklistItemType['status']) => void;
 }
@@ -47,7 +47,7 @@ const StatusIndicator = styled(Box)<{ status: ChecklistItemType['status'] }>(({
   };
 });
 
-const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onStatusChange }) => {
+export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onStatusChange }) => {
   const handleCheckboxChange = () => {
     const newStatus = item.status === 'done' ? 'not_started' : 'done';
     onStatusChange(item.id, newStatus);
@@ -87,5 +87,3 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onStatusChange }) =
     </ItemContainer>
   );
 };
-
-export default ChecklistItem;

@@ -1,7 +1,7 @@
 // src/components/__tests__/ChecklistItem.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import ChecklistItem from '../checklist/ChecklistItem';
+import { ChecklistItem } from '../ChecklistItem';
 
 describe('ChecklistItem Component', () => {
   const mockOnStatusChange = vi.fn();

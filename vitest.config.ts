@@ -11,5 +11,13 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
+    alias: {
+      '@components': '/src/components',
+      '@hooks': '/src/hooks',
+      '@pages': '/src/pages',
+      '@routes': '/src/routes',
+      '@store': '/src/store',
+      '@utils': '/src/utils',
+    },
   },
 });
