@@ -4,6 +4,8 @@ import { UserProfileBadge } from './UserProfileBadge';
 const meta: Meta<typeof UserProfileBadge> = {
   title: 'User/UserProfileBadge',
   component: UserProfileBadge,
+  tags: ['autodocs'],
+
   parameters: {
     backgrounds: {
       default: 'dark',

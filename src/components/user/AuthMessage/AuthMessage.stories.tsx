@@ -3,6 +3,8 @@ import { AuthMessage } from './AuthMessage';
 
 const meta: Meta<typeof AuthMessage> = {
   title: 'User/AuthMessage',
+  tags: ['autodocs'],
+
   component: AuthMessage,
 };
 
