@@ -17,7 +17,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ paddingLeft: '25px' }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}

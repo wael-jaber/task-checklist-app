@@ -16,6 +16,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import logo from '../../../assets/cendas-logo.webp';
 
 export interface NavigationItem {
   id: string;
@@ -67,7 +68,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           p: 2,
         }}
       >
-        <Box component="img" src="/cendas-logo.webp" alt="Logo" sx={{ height: 40 }} />
+        <Box component="img" src={logo} alt="Logo" sx={{ height: 40 }} />
         {isMobile && (
           <IconButton onClick={handleDrawerToggle}>
             <CloseIcon />
@@ -105,11 +106,18 @@ export const Navigation: React.FC<NavigationProps> = ({
     <>
       {isMobile && (
         <IconButton
-          color="inherit"
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { md: 'none' } }}
+          sx={{
+            color: 'white',
+            mr: 2,
+            display: { md: 'none' },
+            position: 'absolute',
+            top: 10,
+            left: 15,
+            zIndex: theme => theme.zIndex.drawer - 1,
+          }}
         >
           <MenuIcon />
         </IconButton>
