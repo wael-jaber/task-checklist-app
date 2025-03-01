@@ -1,4 +1,3 @@
-// src/stories/ChecklistItem.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChecklistItem } from './ChecklistItem';
 

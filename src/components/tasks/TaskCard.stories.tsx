@@ -1,4 +1,3 @@
-// src/stories/TaskCard.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import { TaskCard } from './TaskCard';
 import { v4 as uuidv4 } from 'uuid';

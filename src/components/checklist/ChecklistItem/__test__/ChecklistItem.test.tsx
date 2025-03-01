@@ -1,4 +1,3 @@
-// src/components/__tests__/ChecklistItem.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { ChecklistItem } from '../ChecklistItem';
