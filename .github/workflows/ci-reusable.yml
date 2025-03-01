@@ -31,13 +31,14 @@ jobs:
         run: pnpm lint
 
       - name: Run Tests with Coverage
-        run: pnpm test -- --coverage
+        run: pnpm test:coverage
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage/coverage-final.json
+          slug: wael-jaber/task-checklist-app
+          file: ./coverage/lcov.info
           flags: ${{ github.ref_name }}
           name: coverage-${{ github.ref_name }}
           fail_ci_if_error: true
