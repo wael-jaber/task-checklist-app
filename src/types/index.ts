@@ -29,6 +29,7 @@ export interface Task {
   title: string;
   description?: string;
   isBlocked?: boolean;
+  isCompleted?: boolean;
   checklist: ChecklistItem[];
   createdAt: number;
   updatedAt: number;

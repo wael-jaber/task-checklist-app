@@ -5,12 +5,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Task } from '@types';
 import { ChecklistGroup } from '@components/checklist/ChecklistGroup';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export interface TaskDetailsProps {
   task: Task;
   onEdit?: () => void;
   onDelete?: () => void;
-  onChecklistItemStatusChange?: (itemId: string, status: string) => void;
+  onChecklistItemStatusChange?: (itemId: string, status: string, statusText?: string) => void;
   readonly?: boolean;
 }
 
@@ -21,9 +22,9 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
   onChecklistItemStatusChange,
   readonly = false,
 }) => {
-  const handleChecklistItemChange = (itemId: string, status: string) => {
+  const handleChecklistItemChange = (itemId: string, status: string, statusText?: string) => {
     if (onChecklistItemStatusChange) {
-      onChecklistItemStatusChange(itemId, status);
+      onChecklistItemStatusChange(itemId, status, statusText);
     }
   };
 
@@ -50,6 +51,15 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({
                 icon={<ErrorIcon />}
                 label="Blocked"
                 color="error"
+                size="small"
+                sx={{ ml: 2 }}
+              />
+            )}
+            {!task.isBlocked && task.isCompleted && (
+              <Chip
+                icon={<CheckCircleIcon />}
+                label="Completed"
+                color="success"
                 size="small"
                 sx={{ ml: 2 }}
               />

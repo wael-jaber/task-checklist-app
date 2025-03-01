@@ -24,6 +24,7 @@
     "paths": {
       "@types": ["src/types/index.ts"],
       "@components/*": ["src/components/*"],
+      "@containers/*": ["src/containers/*"],
       "@db/*": ["src/db/*"],
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],

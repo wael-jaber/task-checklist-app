@@ -73,9 +73,7 @@ export const TaskListFilter: React.FC<TaskListFilterProps> = ({
         />
 
         <FormControl variant="outlined" size="small" sx={{ minWidth: { xs: '100%', sm: 200 } }}>
-          <InputLabel id="task-status-filter-label" htmlFor="task-status-filter">
-            Status
-          </InputLabel>
+          <InputLabel id="task-status-filter-label">Status</InputLabel>
           <Select
             labelId="task-status-filter-label"
             id="task-status-filter"
