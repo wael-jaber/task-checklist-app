@@ -3,37 +3,11 @@ name: Continuous Integration
 on:
   push:
     branches-ignore:
-      - develop
       - main
+      - develop
       - gh-pages
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   ci:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Test
-        run: pnpm test
+    uses: wael-jaber/task-checklist-app/.github/workflows/ci-reusable.yml@develop

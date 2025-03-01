@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   ci:
-    uses: wael-jaber/task-checklist-app/.github/workflows/ci.yml@develop
+    uses: wael-jaber/task-checklist-app/.github/workflows/ci-reusable.yml@develop
 
   deploy-storybook:
     runs-on: ubuntu-latest
