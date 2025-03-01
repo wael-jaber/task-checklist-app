@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { TaskCard } from '../TaskCard';
+import { TaskCard } from '..';
 
 describe('TaskCard Component', () => {
   const mockOnChecklistItemStatusChange = vi.fn();
